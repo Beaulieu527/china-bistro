@@ -15,9 +15,38 @@ function routeConfig ($stateProvider) {
       abstract: true,//abstract- never go directly, parent which can just be inherited and shared
       templateUrl: 'src/public/public.html'//this will be injected to ui view in index.html
     })
+
+
     .state('public.home', {//child injecting template into public.html
       url: '/',
       templateUrl: 'src/public/home/home.html'
+    })
+
+
+    .state('public.menu', {//child injecting template into public.html
+      url: '/menu',
+      templateUrl: 'src/public/menu/menu.html',
+      controller:'MenuController',
+      controllerAs: 'menuCtrl',
+      resolve:{  
+        menuCategories: ['MenuService', function(MenuService){
+          return MenuService.getCategories();
+        }]
+      }
+
+
+    })
+
+    .state('public.menuitems',  {
+      url:'/menu/{category}',
+      templateUrl: 'src/public/menu-items/menu-items.html',
+      controller:'MenuItemsController',
+      controllerAs: 'menuItemsCtrl',
+      resolve:{
+        menuItems: ['$stateParams','MenuService', function($stateParams,MenuService)  {
+          return MenuService.getMenuItems($stateParams.category);
+        }]
+      }
     });
 }
 })();
