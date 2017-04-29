@@ -49,11 +49,19 @@ function routeConfig ($stateProvider) {
       }
     })
 
-    .state('public.signUp', {//child injecting template into public.html
+    .state('public.signUp', {
       url: '/signUp',
       templateUrl: 'src/public/sign-up/signup.html',
       controller:'SignUpController',
       controllerAs: 'signupCtrl'
+      
+    })
+
+    .state('public.myInfo', {
+      url: '/myInfo',
+      templateUrl: 'src/public/my-info/myInfo.html',
+      controller:'MyInfoController',
+      controllerAs: 'myinfoCtrl'
       
     });
 }

@@ -1,18 +1,18 @@
 (function() {
   "use strict";
 
-  angular.module('common')
+  angular.module('public')
   .service('SignUpService', SignUpService);
 
   SignUpService.$inject = ['$http','ApiPath'];
   function SignUpService($http, ApiPath) {
     var service = this;
-    var foundItems = [];
+    
     service.getItemsByShortName = function(shortName)  {
      
-      return $http.get(ApiPath + '/menu_items/'+shortName+'.json').then(function(response) {
-        foundItems = response.data;
-        return foundItems;
+      return $http.get(ApiPath + '/menu_items/'+shortName.toUpperCase()+'.json').then(function(response) {
+        return response.data;
+        
       }).catch(function(error)  {
         throw error;
 
