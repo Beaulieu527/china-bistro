@@ -7,23 +7,29 @@
   SignUpController.$inject = ['SignUpService','MyInfoService'];
   function SignUpController(SignUpService,MyInfoService) {
     var $ctrl = this;
-    $ctrl.user= {};
+    $ctrl.info= {};
 
     $ctrl.submit = function() {
-      console.log("$ctrl.user.favMenu", $ctrl.user.favMenu);
-      var menuItems = SignUpService.getItemsByShortName($ctrl.user.favMenu).catch(function(e) {
+      console.log("$ctrl.info.favMenu", $ctrl.info.favMenu);
+      SignUpService.getItemsByShortName($ctrl.info.favMenu).then(function(response) {
+        $ctrl.isInvalidItem = false;
+         $ctrl.completed = true;
+         MyInfoService.setInfo($ctrl.info);
+      })
+
+      .catch(function(e) {
         $ctrl.isInvalidItem = true;
       });
-      console.log("menuItems", menuItems);
+     
       
-      $ctrl.completed = true;
-      MyInfoService.setInfo($ctrl.user,menuItems);
+     
+      
     };
 
     $ctrl.validateFavItem = function()  { 
       $ctrl.isInvalidItem = false;
 
-      SignUpService.getItemsByShortName($ctrl.user.favMenu).catch(function(e) {
+      SignUpService.getItemsByShortName($ctrl.info.favMenu).catch(function(e) {
          $ctrl.isInvalidItem = true;
       });
      

@@ -42,7 +42,7 @@
 
           <div id="collapsable-nav" class="collapse navbar-collapse">
             <ul id="nav-list" class="nav navbar-nav navbar-right">
-              <li id="navHomeButton" class="visible-xs active">
+              <li id="navHomeButton" class="visible-xs">
                 <a href="index.html">
                   <span class="glyphicon glyphicon-home"></span> Home</a>
               </li>
@@ -50,13 +50,13 @@
                 <a ui-sref="public.menu">
                   <span class="glyphicon glyphicon-cutlery"></span><br class="hidden-xs"> Menu</a>
               </li>
-              <li id="navMenuButton" ui-sref-active="active">
-                <a ui-sref="public.myInfo">
+              <li ui-sref-active="active">
+                <a ui-sref="public.myinfo">
                   <span class="glyphicon glyphicon-info-sign"></span><br class="hidden-xs"> My Info</a>
               </li>
-              <li id="navMenuButton" ui-sref-active="active">
-                <a ui-sref="public.signUp">
-                  <span class="glyphicon glyphicon-user"></span><br class="hidden-xs"> Sign Up</a>
+              <li ui-sref-active="active">
+                <a ui-sref="public.signup">
+                  <span class="glyphicon glyphicon-certificate"></span><br class="hidden-xs"> Sign Up</a>
               </li>
               <li id="phone" class="hidden-xs">
                 <a href="tel:410-602-5008">
@@ -76,7 +76,7 @@
     </div>
     <div id="xs-deliver" class="text-center visible-xs">* We Deliver</div>
 
-    <ui-view> 
+    <ui-view>
       <div class="text-center initial-loading">
         <h2>Loading Site...</h2>
       </div>
@@ -124,6 +124,8 @@
     <script src="src/common/loading/loading.component.js"></script>
     <script src="src/common/loading/loading.interceptor.js"></script>
     <script src="src/common/menu.service.js"></script>
+    <script src="src/common/myinfo.service.js"></script>
+
     <!-- Public Module -->
     <script src="src/public/public.module.js"></script>
     <script src="src/public/public.routes.js"></script>
@@ -131,11 +133,9 @@
     <script src="src/public/menu-category/menu-category.component.js"></script>
     <script src="src/public/menu-items/menu-items.controller.js"></script>
     <script src="src/public/menu-item/menu-item.component.js"></script>
-    <script src="src/public/sign-up/signup.controller.js"></script>
-    <script src="src/public/sign-up/signup.service.js"></script>
-    <script src="src/public/my-info/myinfo.controller.js"></script>
-    <script src="src/public/my-info/myinfo.service.js"></script>
-   
+    <script src="src/public/signup/signup.controller.js"></script>
+    <script src="src/public/myinfo/myinfo.controller.js"></script>
+
     <!-- ADMIN SITE -->
 
     <!--Application files -->

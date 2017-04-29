@@ -1,43 +1,49 @@
 (function() {
-  "use strict";
+"use strict";
 
-  angular.module('common')
-  .factory('loadingHttpInterceptor', LoadingHttpInterceptor);
+angular.module('common')
+.factory('loadingHttpInterceptor', LoadingHttpInterceptor);
 
-  LoadingHttpInterceptor.$inject = ['$rootScope', '$q'];
+LoadingHttpInterceptor.$inject = ['$rootScope', '$q'];
+/**
+ * Tracks when a request begins and finishes. When a
+ * request starts, a progress event is emitted to allow
+ * listeners to determine when a request has been initiated.
+ * When the response completes or a response error occurs,
+ * we assume the request has ended and emit a finish event.
+ */
+function LoadingHttpInterceptor($rootScope, $q) {
 
-  function LoadingHttpInterceptor($rootScope, $q) {
+  var loadingCount = 0;
+  var loadingEventName = 'spinner:activate';
 
-    var loadingCount = 0;//if few requests happen at same time then turn off when first request came back and second is pending
-    var loadingEventName = 'spinner:activate';
+  return {
+    request: function (config) {
+      // console.log("Inside interceptor, config: ", config);
 
-    return{//when http service makes a request it first goes to this function below
-      request: function(config) {//config- everything needed for http service to make the request
-        /*console.log("Inside interceptor config", config);*/
-        if(++loadingCount ===1) {//to take care of multiple requests
-          $rootScope.$broadcast(loadingEventName, {on:true});
-        }//boradcast loading event with value is true
+      if (++loadingCount === 1) {
+        $rootScope.$broadcast(loadingEventName, {on: true});
+      }
 
-        return config;
-      },
-      //when response comes back, this is called
-      response: function(response)  {
-        if(--loadingCount === 0)  {
-          $rootScope.$broadcast(loadingEventName, {on:false});
-        }//false to turn off
+      return config;
+    },
 
-        return response;
-      },    
+    response: function (response) {
+      if (--loadingCount === 0) {
+        $rootScope.$broadcast(loadingEventName, {on: false});
+      }
 
-      responseError: function(response)  {
-        if(--loadingCount === 0)  {
-          $rootScope.$broadcast(loadingEventName, {on:false});
-        }//false to turn off
+      return response;
+    },
 
-        return $q.reject(response);//if error then reject that response
-      }   //reject promise because if not then look like promise resovled succesfully.
+    responseError: function (response) {
+      if (--loadingCount === 0) {
+        $rootScope.$broadcast(loadingEventName, {on: false});
+      }
 
-    };
-  }
+      return $q.reject(response);
+    }
+  };
+}
 
 })();
